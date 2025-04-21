@@ -8,13 +8,11 @@ public class Disk {
     private int diameter;
     private Point position;
     private boolean correctPlace;
-    private CanvasWindow canvas;
     private Rectangle disk;
 
-    public Disk(int diameter, Point position, CanvasWindow canvas){
+    public Disk(int diameter, Point position){
         this.diameter = diameter;
         this.position = position;
-        this.canvas = canvas;
         disk = createRectangle();
 
     }
@@ -28,6 +26,11 @@ public class Disk {
 
     public Rectangle getRectangle(){
         return disk;
+    }
+
+    public void setPosition(Point point){
+        disk.setPosition(point);
+        position = point;        
     }
 
     
