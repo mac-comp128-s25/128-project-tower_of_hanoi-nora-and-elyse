@@ -12,7 +12,7 @@ public class GameManager {
         gb.setLevel(i);
         setBoard(i, gb);
         Scanner scan = new Scanner(System.in);
-        while(!dm.checkIfDone()){
+        while(!dm.checkIfDone(gb.getStacks())){
             System.out.println("Continue? ");
             String answer = scan.nextLine();
             shuffleStacks(answer, gb);

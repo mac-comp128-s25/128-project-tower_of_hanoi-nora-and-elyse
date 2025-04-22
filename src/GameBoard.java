@@ -7,6 +7,7 @@ import edu.macalester.graphics.Rectangle;
 
 import java.awt.Color;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Scanner;
 
@@ -130,6 +131,14 @@ public class GameBoard {
         Scanner scan = new Scanner(System.in);
         System.out.println("continue?");
         String input = scan.nextLine();
+    }
+
+    public ArrayList<Deque<Disk>> getStacks(){
+        ArrayList<Deque<Disk>> result = new ArrayList<>();
+        result.add(stack1);
+        result.add(stack2);
+        result.add(stack3);
+        return result;
     }
 
 }
