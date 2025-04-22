@@ -10,5 +10,11 @@ public class DiskManager {
     public void addToBoard(Disk disk){
         canvas.add(disk.getRectangle());
     }
+
+    public boolean checkIfDone(){
+       
+        return false;
+    }
+
     
 }

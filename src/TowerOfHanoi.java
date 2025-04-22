@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class TowerOfHanoi {
-    private static int level = 1;
+    private static int level = 5;
     public TowerOfHanoi(){
 
     }    

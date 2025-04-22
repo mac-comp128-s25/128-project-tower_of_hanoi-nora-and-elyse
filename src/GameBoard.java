@@ -8,22 +8,30 @@ import edu.macalester.graphics.Rectangle;
 import java.awt.Color;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Scanner;
 
 public class GameBoard {
+    private int level;
     private CanvasWindow board;
     private GraphicsGroup structure;
     private Deque<Disk> stack1 = new ArrayDeque<Disk>();
     private Deque<Disk> stack2 = new ArrayDeque<Disk>();
     private Deque<Disk> stack3 = new ArrayDeque<Disk>();
-
+    private int[] distancesFromBottom;
 
 
     public GameBoard(){
+        level = 0;
         board = new CanvasWindow("Tower of Hanoi", 800, 500);
         structure = constructBoard();
         board.add(structure);
         board.draw();
+        distancesFromBottom = new int[3];
+      //  distancesFromBottom[0] = 430 - (20 * level);
+       // System.out.println("dis" + distancesFromBottom[0]);
 
+        distancesFromBottom[1] = 430;
+        distancesFromBottom[2] = 430;
         
     }
 
@@ -82,6 +90,10 @@ public class GameBoard {
     }
 
     public void resetStacks(){
+        distancesFromBottom[0] = 430 - (20 * level);
+        System.out.println("dis" + distancesFromBottom[0]);
+        distancesFromBottom[1] = 430;
+        distancesFromBottom[2] = 430;
         stack1.clear();
         stack2.clear();
         stack3.clear();
@@ -89,4 +101,35 @@ public class GameBoard {
         board.add(constructBoard());
         board.draw();
     }
+
+    public void setLevel(int l){
+        level = l;
+        distancesFromBottom[0] = 430 - (20 * level);
+        System.out.println("dis" + distancesFromBottom[0]);
+
+
+    }
+
+    public void moveDisk(Disk d, int newStack, int originalStack){
+        double xPos = 0;
+        if(newStack ==1){
+            xPos = 167  - ((d.getRectangle().getWidth()-10)/2);
+        }
+        if(newStack == 2){
+            xPos = 400 - ((d.getRectangle().getWidth()-10)/2);
+        }
+        if(newStack ==3){
+            xPos = 617 -  ((d.getRectangle().getWidth()-10)/2);
+        }
+
+        d.getRectangle().setPosition(new Point(xPos, distancesFromBottom[newStack-1]));
+        distancesFromBottom[newStack-1] -= 20;
+        distancesFromBottom[originalStack-1] += 20;
+
+        board.draw();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("continue?");
+        String input = scan.nextLine();
+    }
+
 }
