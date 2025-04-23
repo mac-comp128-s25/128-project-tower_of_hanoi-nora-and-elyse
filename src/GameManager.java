@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Scanner;
 
 import edu.macalester.graphics.Point;
@@ -17,7 +19,7 @@ public class GameManager {
             String answer = scan.nextLine();
             shuffleStacks(answer, gb);
         }
-       
+        
         gb.printStacks();
         if(i <9){
           return true;
@@ -27,7 +29,15 @@ public class GameManager {
         }
     }
 
+
+
     public void shuffleStacks(String answer, GameBoard gb){
+        while(!checkMove(answer, gb)){
+            System.out.println("Invalid move, try again");
+            System.out.println("Enter Move: ");
+            Scanner scan = new Scanner(System.in);
+            answer = scan.nextLine();
+        }
         if(answer.substring(0,1).equals("1")){
             if(answer.substring(1).equals("2")){
                 Disk tempDisk = gb.removeStack1();
@@ -80,14 +90,26 @@ public class GameManager {
         }
     }
 
-    public boolean checkMove() {
-        return false;
+    public boolean checkMove(String answer, GameBoard gb) {
+        int num1 =  Integer.parseInt(answer.substring(0,1)) -1;
+        int num2 = Integer.parseInt(answer.substring(1)) -1;
+        ArrayList<Deque<Disk>> stacks = gb.getStacks();
+        if(stacks.get(num1).isEmpty()){
+            return false;
+        }
+        Double width1 = stacks.get(num1).peek().getRectangle().getWidth();
+        Double width2;
+        if(!stacks.get(num2).isEmpty()){
+             width2 = stacks.get(num2).peek().getRectangle().getWidth();
+        }
+        else{
+            width2 = 1000.0;
+        }
+        if(width1 > width2){
+            return false;
+        }
+        return true;
     }
 
-    // public void move(Disk disk, Point newPoint, GameBoard gb){
-    //     disk.setPosition(newPoint);
-    //     gb.getCanvas().draw();
-    // }
-
-  
+    
 }

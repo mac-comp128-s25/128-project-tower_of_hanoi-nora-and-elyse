@@ -1,11 +1,14 @@
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsObject;
+import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -128,9 +131,9 @@ public class GameBoard {
         distancesFromBottom[originalStack-1] += 20;
 
         board.draw();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("continue?");
-        String input = scan.nextLine();
+       // Scanner scan = new Scanner(System.in);
+       // System.out.println("continue?");
+       // String input = scan.nextLine();
     }
 
     public ArrayList<Deque<Disk>> getStacks(){
@@ -139,6 +142,15 @@ public class GameBoard {
         result.add(stack2);
         result.add(stack3);
         return result;
+    }
+
+    public void winScreen(){
+        GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level++) );
+        youWin.setCenter(350, 100);
+        youWin.setFont(FontStyle.BOLD, 30);
+        board.add(youWin);
+        board.draw();
+        board.pause(3000);
     }
 
 }
