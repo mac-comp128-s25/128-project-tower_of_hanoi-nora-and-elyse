@@ -5,6 +5,7 @@ import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.ui.Button;
 
 
 import java.awt.Color;
@@ -22,6 +23,12 @@ public class GameBoard {
     private Deque<Disk> stack2 = new ArrayDeque<Disk>();
     private Deque<Disk> stack3 = new ArrayDeque<Disk>();
     private int[] distancesFromBottom;
+    private Button tower1;
+    private Button tower2;
+    private Button tower3;
+    private Boolean button1;
+    private Boolean button2;
+    private Boolean button3;
 
 
     public GameBoard(){
@@ -36,6 +43,8 @@ public class GameBoard {
 
         distancesFromBottom[1] = 430;
         distancesFromBottom[2] = 430;
+
+        setUpButtons();
         
     }
 
@@ -151,6 +160,79 @@ public class GameBoard {
         board.add(youWin);
         board.draw();
         board.pause(3000);
+    }
+
+    public void setUpButtons() {
+        tower1 = new Button("Tower 1");
+        tower2 = new Button("Tower 2");
+        tower3 = new Button("Tower 3");
+        board.add(tower1, 167 -40, 175 - 40);
+        board.add(tower2,400 -40, 175 - 40);
+        board.add(tower3,617 -40, 175 - 40);
+
+        button1 = false;
+        button2 = false;
+        button3 = false;
+
+        tower1.onClick(() -> {
+            buttonPressed(1);
+            indicateButton();
+            button1 = true;
+        });
+
+        tower2.onClick(() -> {
+            buttonPressed(2);
+            indicateButton();
+            button2 = true;
+        });
+
+        tower3.onClick(() -> {
+            buttonPressed(3);
+            indicateButton();
+            button3 = true;
+        });
+    }
+
+    public String buttonPressed(int pressed) {
+        String sequence = "0";
+        if(button1 && button2) {
+            if(pressed == 1){
+                sequence = "21";
+            }
+            else{
+                sequence = "12";
+            }
+            button1 = false;
+            button2 = false;
+        } 
+        if(button1 && button3) {
+            if(pressed == 1){
+                sequence = "31";
+            }
+            else{
+                sequence = "13";
+            }
+            button1 = false;
+            button3 = false;
+        }
+
+        if(button3 && button2) {
+            if(pressed == 2){
+                sequence = "32";
+            }
+            else{
+                sequence = "23";
+            }
+            button3 = false;
+            button2 = false;
+        }
+        if(!sequence.equals("0")){
+            GameManager.shuffleStacks(sequence, this);
+        }
+    }
+
+    public void indicateButton() {
+
     }
 
 }
