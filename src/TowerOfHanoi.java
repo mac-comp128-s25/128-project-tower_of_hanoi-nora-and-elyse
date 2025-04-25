@@ -8,7 +8,7 @@ public class TowerOfHanoi {
 
     public static void main(String[] args){
         GameManager gameManager = new GameManager();
-        GameBoard gameBoard = new GameBoard();
+        GameBoard gameBoard = new GameBoard(gameManager);
         run(gameManager, gameBoard);
     }
 

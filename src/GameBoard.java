@@ -16,6 +16,9 @@ import java.util.Deque;
 import java.util.Scanner;
 
 public class GameBoard {
+    private String answer;
+    private GameManager gm;
+    private DiskManager dm;
     private int level;
     private CanvasWindow board;
     private GraphicsGroup structure;
@@ -31,7 +34,7 @@ public class GameBoard {
     private Boolean button3;
 
 
-    public GameBoard(){
+    public GameBoard(GameManager gm){
         level = 0;
         board = new CanvasWindow("Tower of Hanoi", 800, 500);
         structure = constructBoard();
@@ -40,8 +43,9 @@ public class GameBoard {
         distancesFromBottom = new int[3];
         distancesFromBottom[1] = 430;
         distancesFromBottom[2] = 430;
-
-        setUpButtons();
+        this.gm = gm;
+        dm = null;
+        //setUpButtons();
         
     }
 
@@ -155,35 +159,38 @@ public class GameBoard {
         board.pause(3000);
     }
 
-    public void setUpButtons() {
+    public String setUpButtons() {
         tower1 = new Button("Tower 1");
         tower2 = new Button("Tower 2");
         tower3 = new Button("Tower 3");
         board.add(tower1, 167 -40, 175 - 40);
         board.add(tower2,400 -40, 175 - 40);
         board.add(tower3,617 -40, 175 - 40);
-
+        board.draw();
         button1 = false;
         button2 = false;
         button3 = false;
+        answer = "";
+        while(answer.length() < 2){
+            tower1.onClick(() -> {
+                answer = buttonPressed(1);
+                indicateButton();
+                button1 = true;
+            });
 
-        tower1.onClick(() -> {
-            buttonPressed(1);
-            indicateButton();
-            button1 = true;
-        });
+            tower2.onClick(() -> {
+                answer = buttonPressed(2);
+                indicateButton();
+                button2 = true;
+            });
 
-        tower2.onClick(() -> {
-            buttonPressed(2);
-            indicateButton();
-            button2 = true;
-        });
-
-        tower3.onClick(() -> {
-            buttonPressed(3);
-            indicateButton();
-            button3 = true;
-        });
+            tower3.onClick(() -> {
+                answer = buttonPressed(3);
+                indicateButton();
+                button3 = true;
+            });
+        }
+        return answer;
     }
 
     public String buttonPressed(int pressed) {
@@ -198,7 +205,7 @@ public class GameBoard {
             button1 = false;
             button2 = false;
         } 
-        if(button1 && button3) {
+        else if(button1 && button3) {
             if(pressed == 1){
                 sequence = "31";
             }
@@ -209,7 +216,7 @@ public class GameBoard {
             button3 = false;
         }
 
-        if(button3 && button2) {
+        else if(button3 && button2) {
             if(pressed == 2){
                 sequence = "32";
             }
@@ -219,13 +226,26 @@ public class GameBoard {
             button3 = false;
             button2 = false;
         }
-        if(!sequence.equals("0")){
-            GameManager.shuffleStacks(sequence, this);
+        else{
+            sequence = "" + pressed;
         }
+        // if(!sequence.equals("0")){
+        //     gm.shuffleStacks(sequence, this);
+        // }
+
+        return sequence;
+        // if(dm.checkIfDone(getStacks())){
+            
+        // }
+        
     }
 
     public void indicateButton() {
 
+    }
+
+    public void setDiskManager(DiskManager dm){
+        this.dm = dm;
     }
 
 }

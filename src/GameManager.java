@@ -13,12 +13,18 @@ public class GameManager {
     public boolean runRound(int i, GameBoard gb){
         gb.setLevel(i);
         setBoard(i, gb);
-        Scanner scan = new Scanner(System.in);
         while(!dm.checkIfDone(gb.getStacks())){
-            System.out.println("Continue? ");
-            String answer = scan.nextLine();
+            
+            String answer = gb.setUpButtons();
             shuffleStacks(answer, gb);
         }
+        // Scanner scan = new Scanner(System.in);
+        // while(!dm.checkIfDone(gb.getStacks())){
+        //     // System.out.println("Continue? ");
+        //     // String answer = scan.nextLine();
+        //     // shuffleStacks(answer, gb);
+        //     gb.setUpButtons();
+        // }
         
         gb.printStacks();
         if(i <9){
@@ -78,6 +84,7 @@ public class GameManager {
 
     public void setBoard(int i, GameBoard gb){
         dm = new DiskManager(gb.getCanvas());
+        gb.setDiskManager(dm);
         Point positionTracker = new Point((172-i*7), (430));
         for(int j = i; j > 0; j--){
 
