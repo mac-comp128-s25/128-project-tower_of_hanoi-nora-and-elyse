@@ -14,7 +14,7 @@ public class TowerOfHanoi {
 
     public static void run(GameManager gm, GameBoard gb){
         while(gm.runRound(level, gb)){
-            System.out.println("Running " + level);
+           // System.out.println("Running " + level);
             gb.winScreen();
             level++;
             gb.resetStacks();

@@ -31,9 +31,6 @@ public class GameBoard {
         board.add(structure);
         board.draw();
         distancesFromBottom = new int[3];
-      //  distancesFromBottom[0] = 430 - (20 * level);
-       // System.out.println("dis" + distancesFromBottom[0]);
-
         distancesFromBottom[1] = 430;
         distancesFromBottom[2] = 430;
         
@@ -86,6 +83,7 @@ public class GameBoard {
        return stack3.pop();
     }
 
+    //delete evemtually
     public void printStacks(){
         System.out.println(stack1.toString());
         System.out.println(stack2.toString());
@@ -95,7 +93,6 @@ public class GameBoard {
 
     public void resetStacks(){
         distancesFromBottom[0] = 430 - (20 * level);
-        System.out.println("dis" + distancesFromBottom[0]);
         distancesFromBottom[1] = 430;
         distancesFromBottom[2] = 430;
         stack1.clear();
@@ -109,7 +106,6 @@ public class GameBoard {
     public void setLevel(int l){
         level = l;
         distancesFromBottom[0] = 430 - (20 * level);
-        System.out.println("dis" + distancesFromBottom[0]);
 
 
     }
@@ -131,9 +127,6 @@ public class GameBoard {
         distancesFromBottom[originalStack-1] += 20;
 
         board.draw();
-       // Scanner scan = new Scanner(System.in);
-       // System.out.println("continue?");
-       // String input = scan.nextLine();
     }
 
     public ArrayList<Deque<Disk>> getStacks(){
@@ -145,7 +138,7 @@ public class GameBoard {
     }
 
     public void winScreen(){
-        GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level++) );
+        GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level + 1) );
         youWin.setCenter(350, 100);
         youWin.setFont(FontStyle.BOLD, 30);
         board.add(youWin);
