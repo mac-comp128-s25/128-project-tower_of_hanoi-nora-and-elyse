@@ -151,7 +151,7 @@ public class GameBoard {
     }
 
     public void winScreen(){
-        GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level + 1) );
+        GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level) );
         youWin.setCenter(350, 100);
         youWin.setFont(FontStyle.BOLD, 30);
         board.add(youWin);
@@ -159,37 +159,94 @@ public class GameBoard {
         board.pause(3000);
     }
 
-    public String setUpButtons() {
+    // public String setUpButtons() {
+    //     tower1 = new Button("Tower 1");
+    //     tower2 = new Button("Tower 2");
+    //     tower3 = new Button("Tower 3");
+    //     board.add(tower1, 167 -40, 175 - 40);
+    //     board.add(tower2,400 -40, 175 - 40);
+    //     board.add(tower3,617 -40, 175 - 40);
+    //     board.draw();
+    //     button1 = false;
+    //     button2 = false;
+    //     button3 = false;
+    //     answer = "";
+    //     while(answer.length() < 2){
+    //         tower1.onClick(() -> {
+    //             System.out.println("clicked 1");
+    //             answer = buttonPressed(1);
+    //             indicateButton();
+    //             button1 = true;
+    //         });
+
+    //         tower2.onClick(() -> {
+    //             System.out.println("clicked 2");
+    //             answer = buttonPressed(2);
+    //             indicateButton();
+    //             button2 = true;
+    //         });
+
+    //         tower3.onClick(() -> {
+    //             System.out.println("clicked 3");
+    //             answer = buttonPressed(3);
+    //             indicateButton();
+    //             button3 = true;
+    //         });
+    //     }
+    //     return answer;
+    // }
+
+    public void setUpButtons() {
         tower1 = new Button("Tower 1");
         tower2 = new Button("Tower 2");
         tower3 = new Button("Tower 3");
-        board.add(tower1, 167 -40, 175 - 40);
-        board.add(tower2,400 -40, 175 - 40);
-        board.add(tower3,617 -40, 175 - 40);
+    
+        board.add(tower1, 127, 135);
+        board.add(tower2, 360, 135);
+        board.add(tower3, 577, 135);
         board.draw();
+    
         button1 = false;
         button2 = false;
         button3 = false;
         answer = "";
-        while(answer.length() < 2){
-            tower1.onClick(() -> {
-                answer = buttonPressed(1);
-                indicateButton();
-                button1 = true;
-            });
+    
+        tower1.onClick(() -> handleButtonClick(1));
+        tower2.onClick(() -> handleButtonClick(2));
+        tower3.onClick(() -> handleButtonClick(3));
+    }
+    private void handleButtonClick(int towerNumber) {
+        System.out.println("clicked " + towerNumber);
+        answer = answer + buttonPressed(towerNumber);
+        System.out.println(answer);
+        indicateButton();
+    
+        if (answer.length() >= 2) {
+            gm.shuffleStacks(answer, this);  
+    
+            if (dm.checkIfDone(getStacks())) {
+                System.out.println("You finished the level!");
+                nextLevel(); 
+            }
 
-            tower2.onClick(() -> {
-                answer = buttonPressed(2);
-                indicateButton();
-                button2 = true;
-            });
-
-            tower3.onClick(() -> {
-                answer = buttonPressed(3);
-                indicateButton();
-                button3 = true;
-            });
+            answer = "";
+            setUpButtons();
         }
+    }
+    private void nextLevel() {
+        level++;
+        if (level <= 9) {
+            winScreen();
+            resetStacks();
+            gm.runRound(level, this);
+        } else {
+            System.out.println("Game over! You beat all levels!");
+            
+        }
+    }
+    
+
+    public String getAnswer(){
         return answer;
     }
 

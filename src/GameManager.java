@@ -13,11 +13,15 @@ public class GameManager {
     public boolean runRound(int i, GameBoard gb){
         gb.setLevel(i);
         setBoard(i, gb);
-        while(!dm.checkIfDone(gb.getStacks())){
-            
-            String answer = gb.setUpButtons();
-            shuffleStacks(answer, gb);
-        }
+        gb.setUpButtons();
+        // gb.setLevel(i);
+        // setBoard(i, gb);
+        // while(!dm.checkIfDone(gb.getStacks())){
+        //     gb.setUpButtons();
+        //     String answer = gb.getAnswer();
+        //     System.err.println("done : " + answer);
+        //     shuffleStacks(answer, gb);
+        // }
         // Scanner scan = new Scanner(System.in);
         // while(!dm.checkIfDone(gb.getStacks())){
         //     // System.out.println("Continue? ");
@@ -38,12 +42,14 @@ public class GameManager {
 
 
     public void shuffleStacks(String answer, GameBoard gb){
-        while(!checkMove(answer, gb)){
-            System.out.println("Invalid move, try again");
-            System.out.println("Enter Move: ");
-            Scanner scan = new Scanner(System.in);
-            answer = scan.nextLine();
-        }
+        if(answer.length()>1){
+            while(!checkMove(answer, gb)){
+                System.out.println("Invalid move, try again");
+                System.out.println("Enter Move: ");
+                Scanner scan = new Scanner(System.in);
+                answer = scan.nextLine();
+            }
+        
         if(answer.substring(0,1).equals("1")){
             if(answer.substring(1).equals("2")){
                 Disk tempDisk = gb.removeStack1();
@@ -80,6 +86,7 @@ public class GameManager {
                 gb.moveDisk(tempDisk, 2, 3);
             }
         }
+    }
     }
 
     public void setBoard(int i, GameBoard gb){
