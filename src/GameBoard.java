@@ -20,6 +20,7 @@ public class GameBoard {
     private GameManager gm;
     private DiskManager dm;
     private int level;
+    private FewestMoveCalculator fmc;
     private CanvasWindow board;
     private GraphicsGroup structure;
     private Deque<Disk> stack1 = new ArrayDeque<Disk>();
@@ -32,6 +33,7 @@ public class GameBoard {
     private Boolean button1;
     private Boolean button2;
     private Boolean button3;
+    private Button help;
 
 
     public GameBoard(GameManager gm){
@@ -40,6 +42,7 @@ public class GameBoard {
         structure = constructBoard();
         board.add(structure);
         board.draw();
+        fmc = null;
         distancesFromBottom = new int[3];
         distancesFromBottom[1] = 430;
         distancesFromBottom[2] = 430;
@@ -200,10 +203,12 @@ public class GameBoard {
         tower1 = new Button("Tower 1");
         tower2 = new Button("Tower 2");
         tower3 = new Button("Tower 3");
-    
+        help = new Button("Help");
+        
         board.add(tower1, 127, 135);
         board.add(tower2, 360, 135);
         board.add(tower3, 577, 135);
+        board.add(help);
         board.draw();
     
         button1 = false;
@@ -214,13 +219,18 @@ public class GameBoard {
         tower1.onClick(() -> handleButtonClick(1));
         tower2.onClick(() -> handleButtonClick(2));
         tower3.onClick(() -> handleButtonClick(3));
+        help.onClick(() -> handleButtonClick(5)); // triggers different handling 
     }
     private void handleButtonClick(int towerNumber) {
         System.out.println("clicked " + towerNumber);
         answer = answer + buttonPressed(towerNumber);
         System.out.println(answer);
         indicateButton();
-    
+        if(towerNumber == 5){
+            fmc.moveEffieciently(stack1, 1, 3, 2);
+            dm.checkIfDone(getStacks());
+            nextLevel();
+        }
         if (answer.length() >= 2) {
             gm.shuffleStacks(answer, this);  
     
@@ -303,6 +313,7 @@ public class GameBoard {
 
     public void setDiskManager(DiskManager dm){
         this.dm = dm;
+        fmc = new FewestMoveCalculator(this, gm, dm);
     }
 
 }
