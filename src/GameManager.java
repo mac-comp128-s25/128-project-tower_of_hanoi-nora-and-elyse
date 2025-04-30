@@ -53,11 +53,20 @@ public class GameManager {
 
     public void shuffleStacks(String answer, GameBoard gb){
         if(answer.length()>1){
-            while(!checkMove(answer, gb)){
-                System.out.println("Invalid move, try again");
-                System.out.println("Enter Move: ");
-                Scanner scan = new Scanner(System.in);
-                answer = scan.nextLine();
+            if(!checkMove(answer, gb)){
+                GraphicsText invalid = new GraphicsText("Invalid move, try again!");
+                invalid.setCenter(300, 50);
+                invalid.setFont(FontStyle.BOLD, 30);
+                gb.getCanvas().add(invalid);
+                gb.getCanvas().draw();
+                gb.getCanvas().pause(3000);
+                coverInvalid(gb);
+                System.out.println("Invalid"); // delete later
+                
+                // System.out.println("Invalid move, try again");
+                // System.out.println("Enter Move: ");
+                // Scanner scan = new Scanner(System.in);
+                // answer = scan.nextLine();
             }
         
         if(answer.substring(0,1).equals("1")){
@@ -148,7 +157,7 @@ public class GameManager {
     }
 
     public void updateConstantText(GameBoard gb) {
-        cover(gb);
+        coverMoves(gb);
         GraphicsText constantText = new GraphicsText("Moves: " + numMoves + "   Minimum moves: " + gb.calculateMinMoves());
         constantText.setCenter(633, 480);
         constantText.setFont(FontStyle.PLAIN, 15);
@@ -156,8 +165,18 @@ public class GameManager {
         gb.getCanvas().draw();
     }
 
-    public void cover(GameBoard gb){
+    public void coverMoves(GameBoard gb){
         Rectangle cover = new Rectangle(530, 470, 230, 25);
+        cover.setFillColor(Color.WHITE);
+        cover.setFilled(true);
+        cover.setStrokeColor(Color.WHITE);
+        cover.setStroked(true);
+        gb.getCanvas().add(cover);
+        gb.getCanvas().draw();
+    }
+
+    public void coverInvalid(GameBoard gb){
+        Rectangle cover = new Rectangle(215, 15, 400, 50);
         cover.setFillColor(Color.WHITE);
         cover.setFilled(true);
         cover.setStrokeColor(Color.WHITE);
