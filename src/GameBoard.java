@@ -34,6 +34,7 @@ public class GameBoard {
     private Boolean button2;
     private Boolean button3;
     private Button help;
+    private int minMoves;
 
 
     public GameBoard(GameManager gm){
@@ -49,6 +50,7 @@ public class GameBoard {
         this.gm = gm;
         dm = null;
         //setUpButtons();
+        minMoves = 1;
         
     }
 
@@ -154,12 +156,13 @@ public class GameBoard {
     }
 
     public void winScreen(){
-        GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level) );
-        youWin.setCenter(350, 100);
+        GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level) + "\n   Moves: " + gm.getNumMoves());
+        youWin.setCenter(350, 50);
         youWin.setFont(FontStyle.BOLD, 30);
         board.add(youWin);
         board.draw();
         board.pause(3000);
+        gm.setNumMoves(0);
     }
 
     // public String setUpButtons() {
@@ -314,6 +317,15 @@ public class GameBoard {
     public void setDiskManager(DiskManager dm){
         this.dm = dm;
         fmc = new FewestMoveCalculator(this, gm, dm);
+    }
+
+    public int calculateMinMoves() {
+        if(level == 1) {
+            minMoves = 1;
+            return 1;
+        }
+        minMoves = (int) Math.pow(2, level) - 1;
+        return minMoves;
     }
 
 }

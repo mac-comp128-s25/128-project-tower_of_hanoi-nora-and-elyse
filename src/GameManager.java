@@ -1,13 +1,20 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Scanner;
 
+import edu.macalester.graphics.FontStyle;
+import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
+import edu.macalester.graphics.Rectangle;
 
 public class GameManager {
-    DiskManager dm;
+    private DiskManager dm;
+    private int numMoves;
+
     public GameManager(){
         dm = null;
+        numMoves = 0;
     }
 
     public boolean runRound(int i, GameBoard gb){
@@ -29,6 +36,9 @@ public class GameManager {
         //     // shuffleStacks(answer, gb);
         //     gb.setUpButtons();
         // }
+
+        updateConstantText(gb);
+        
         
         gb.printStacks();
         if(i <9){
@@ -61,6 +71,7 @@ public class GameManager {
                 gb.addStack3(tempDisk);
                 gb.moveDisk(tempDisk, 3, 1);
             }
+            numMoves++;
         }
         if(answer.substring(0,1).equals("2")){
             if(answer.substring(1).equals("1")){
@@ -73,6 +84,7 @@ public class GameManager {
                 gb.addStack3(tempDisk);
                 gb.moveDisk(tempDisk, 3, 2);
             }
+            numMoves++;
         }
         if(answer.substring(0,1).equals("3")){
             if(answer.substring(1).equals("1")){
@@ -85,7 +97,9 @@ public class GameManager {
                 gb.addStack2(tempDisk);
                 gb.moveDisk(tempDisk, 2, 3);
             }
+            numMoves++;
         }
+        updateConstantText(gb);
     }
     }
 
@@ -125,5 +139,31 @@ public class GameManager {
         return true;
     }
 
+    public void setNumMoves(int nm) {
+        numMoves = nm;
+    }
+
+    public int getNumMoves() {
+        return numMoves;
+    }
+
+    public void updateConstantText(GameBoard gb) {
+        cover(gb);
+        GraphicsText constantText = new GraphicsText("Moves: " + numMoves + "   Minimum moves: " + gb.calculateMinMoves());
+        constantText.setCenter(633, 480);
+        constantText.setFont(FontStyle.PLAIN, 15);
+        gb.getCanvas().add(constantText);
+        gb.getCanvas().draw();
+    }
+
+    public void cover(GameBoard gb){
+        Rectangle cover = new Rectangle(530, 470, 230, 25);
+        cover.setFillColor(Color.WHITE);
+        cover.setFilled(true);
+        cover.setStrokeColor(Color.WHITE);
+        cover.setStroked(true);
+        gb.getCanvas().add(cover);
+        gb.getCanvas().draw();
+    }
     
 }
