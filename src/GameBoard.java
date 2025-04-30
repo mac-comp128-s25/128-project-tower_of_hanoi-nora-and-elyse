@@ -35,6 +35,7 @@ public class GameBoard {
     private Boolean button3;
     private Button help;
     private int minMoves;
+    private boolean solved;
 
 
     public GameBoard(GameManager gm){
@@ -230,15 +231,18 @@ public class GameBoard {
         System.out.println(answer);
         indicateButton();
         if(towerNumber == 5){
+            level = level -1;
+            nextLevel();
             fmc.moveEffieciently(stack1, 1, 3, 2);
-            dm.checkIfDone(getStacks());
+            dm.checkIfDone(getStacks(), this);
             nextLevel();
         }
         if (answer.length() >= 2) {
             gm.shuffleStacks(answer, this);  
     
-            if (dm.checkIfDone(getStacks())) {
+            if (dm.checkIfDone(getStacks(), this)) {
                 System.out.println("You finished the level!");
+                solved = true;
                 nextLevel(); 
             }
 
@@ -249,8 +253,11 @@ public class GameBoard {
     private void nextLevel() {
         level++;
         if (level <= 9) {
-            winScreen();
+            if(solved){
+                winScreen();
+            }
             resetStacks();
+            solved = false;
             gm.runRound(level, this);
         } else {
             System.out.println("Game over! You beat all levels!");
@@ -326,6 +333,10 @@ public class GameBoard {
         }
         minMoves = (int) Math.pow(2, level) - 1;
         return minMoves;
+    }
+
+    public void setSolved(boolean b){
+        solved = b;
     }
 
 }

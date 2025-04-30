@@ -13,12 +13,13 @@ public class FewestMoveCalculator {
     }
 
     public void moveEffieciently(Deque stack, int start, int end, int mid){
-        if(gb.getStacks().get(start-1).size() == 1){
+        if(stack.size() == 1){
             String move = "" + start + end;
+            System.out.println(move);
             gm.shuffleStacks(move, gb);
             gb.getCanvas().draw();
         }
-        else if (!dm.checkIfDone(gb.getStacks())){
+        else if (!dm.checkIfDone(gb.getStacks(), gb)){
             Deque<Disk> tempStack = new ArrayDeque<>();
             tempStack.addAll(stack);
             System.out.println("og: " +stack.toString());
@@ -34,8 +35,12 @@ public class FewestMoveCalculator {
             System.out.println("MOVE:   " + move);
             gm.shuffleStacks(move, gb);             // Step 2
             gb.getCanvas().draw();
+            gb.getCanvas().pause(1500);
 
-            moveEffieciently(tempStack, end, start, mid);
+            moveEffieciently(tempStack, mid, end, start);
+            gb.getCanvas().draw();
+            gb.getCanvas().pause(1500);
+
             }
         }
     }

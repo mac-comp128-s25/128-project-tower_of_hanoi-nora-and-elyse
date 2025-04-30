@@ -15,7 +15,7 @@ public class DiskManager {
         canvas.add(disk.getRectangle());
     }
 
-    public boolean checkIfDone(ArrayList<Deque<Disk>> arrayList){
+    public boolean checkIfDone(ArrayList<Deque<Disk>> arrayList, GameBoard gb){
         if(arrayList.get(0).isEmpty() && arrayList.get(1).isEmpty()){
             Deque<Disk> tempDeque = new ArrayDeque<Disk>();
             tempDeque.addAll(arrayList.get(2));
@@ -28,6 +28,7 @@ public class DiskManager {
                 }
             }
             System.out.println("success!!");
+            gb.setSolved(true);
             return true;
         }
         return false;
