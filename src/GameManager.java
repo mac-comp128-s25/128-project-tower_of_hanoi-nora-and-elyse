@@ -166,7 +166,7 @@ public class GameManager {
     }
 
     public void coverMoves(GameBoard gb){
-        Rectangle cover = new Rectangle(530, 470, 230, 25);
+        Rectangle cover = new Rectangle(500, 470, 270, 25);
         cover.setFillColor(Color.WHITE);
         cover.setFilled(true);
         cover.setStrokeColor(Color.WHITE);
