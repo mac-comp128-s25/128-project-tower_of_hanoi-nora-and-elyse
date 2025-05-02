@@ -232,6 +232,7 @@ public class GameBoard {
         indicateButton();
         if(towerNumber == 5){
             level = level -1;
+            gm.setNumMoves(0);
             nextLevel();
             fmc.moveEffieciently(stack1, 1, 3, 2);
             dm.checkIfDone(getStacks(), this);
