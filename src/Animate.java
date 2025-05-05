@@ -23,8 +23,11 @@ public class Animate {
         System.out.println("x: " + x + " y: " + y);
         System.out.println("end " + end);
      
-        if(check()){
+        if(!check()){
             movingObj.setPosition(new Point (x, y));
+        }
+        else{
+            System.out.println("Stop");
         }
         
       

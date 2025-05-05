@@ -28,6 +28,7 @@ public class GameManager {
     public boolean runRound(int i, GameBoard gb){
         gb.setLevel(i);
         setBoard(i, gb);
+        
         gb.getCanvas().animate( (dt) -> {
             Iterator<Animate> iter = animations.iterator();
             System.out.println(animations.toString());
@@ -38,6 +39,7 @@ public class GameManager {
                     animations.remove();
                 }
             }
+            
 
         });
 
