@@ -1,6 +1,9 @@
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import edu.macalester.graphics.FontStyle;
@@ -11,32 +14,37 @@ import edu.macalester.graphics.Rectangle;
 public class GameManager {
     private DiskManager dm;
     private int numMoves;
+    private Queue<Animate> animations;
+
 
     public GameManager(){
         dm = null;
         numMoves = 0;
+        animations = new LinkedList<Animate>();
+        
+        
     }
 
     public boolean runRound(int i, GameBoard gb){
         gb.setLevel(i);
         setBoard(i, gb);
-        gb.setUpButtons();
-        // gb.setLevel(i);
-        // setBoard(i, gb);
-        // while(!dm.checkIfDone(gb.getStacks())){
-        //     gb.setUpButtons();
-        //     String answer = gb.getAnswer();
-        //     System.err.println("done : " + answer);
-        //     shuffleStacks(answer, gb);
-        // }
-        // Scanner scan = new Scanner(System.in);
-        // while(!dm.checkIfDone(gb.getStacks())){
-        //     // System.out.println("Continue? ");
-        //     // String answer = scan.nextLine();
-        //     // shuffleStacks(answer, gb);
-        //     gb.setUpButtons();
-        // }
+        gb.getCanvas().animate( (dt) -> {
+            Iterator<Animate> iter = animations.iterator();
+            System.out.println(animations.toString());
+            while(iter.hasNext()){
+                Animate animation = iter.next();
+                animation.update(1);
+                if(animation.check()){
+                    animations.remove();
+                }
+            }
 
+        });
+
+        gb.setUpButtons();
+       
+           
+        
         updateConstantText(gb);
         
         
@@ -49,7 +57,9 @@ public class GameManager {
         }
     }
 
-
+    public void addAnimation(Animate a){
+        animations.add(a);
+    }
 
     public void shuffleStacks(String answer, GameBoard gb){
         if(answer.length()>1){
