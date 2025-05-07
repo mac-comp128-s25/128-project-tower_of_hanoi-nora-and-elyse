@@ -255,7 +255,8 @@ public class GameBoard {
             setUpButtons();
         }
     }
-    private void nextLevel() {
+
+    public void nextLevel() {
         level++;
         if (level <= 9) {
             if(solved){
@@ -265,8 +266,6 @@ public class GameBoard {
             solved = false;
             gm.runRound(level, this);
         } else {
-            System.out.println("Game over! You beat all levels!");
-            
         }
     }
     

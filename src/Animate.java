@@ -17,6 +17,7 @@ public class Animate {
     }
 
     public void update(double dt){
+        
         elapsedTime += dt;
         double x = start.getX() + (end.getX() -start.getX()) * (elapsedTime/totalLength);
         double y = start.getY() + (end.getY() -start.getY()) * (elapsedTime/totalLength);
@@ -34,6 +35,10 @@ public class Animate {
     }
 
     public boolean check(){
-        return (movingObj.getPosition() == end);
+         if(Math.abs(movingObj.getPosition().getX() - end.getX()) < 1) {
+            return true;
+         } else {
+            return false;
+         }
     }
 }

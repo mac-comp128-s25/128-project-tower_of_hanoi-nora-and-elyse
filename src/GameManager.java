@@ -21,8 +21,6 @@ public class GameManager {
         dm = null;
         numMoves = 0;
         animations = new LinkedList<Animate>();
-        
-        
     }
 
     public boolean runRound(int i, GameBoard gb){
@@ -34,10 +32,17 @@ public class GameManager {
             System.out.println(animations.toString());
             while(iter.hasNext()){
                 Animate animation = iter.next();
-                animation.update(1);
                 if(animation.check()){
-                    animations.remove();
+                    iter.remove();
+                    System.out.println("removed");
                 }
+                // if (dm.checkIfDone(gb.getStacks(), gb)) {
+                //     System.out.println("You finished the level!");
+                //     gb.setSolved(true);
+                //     gb.nextLevel(); 
+                // }
+                
+                animation.update(1);
             }
             
 
@@ -195,6 +200,10 @@ public class GameManager {
         cover.setStroked(true);
         gb.getCanvas().add(cover);
         gb.getCanvas().draw();
+    }
+
+    public Queue<Animate> getAnimates() {
+        return animations;
     }
     
 }

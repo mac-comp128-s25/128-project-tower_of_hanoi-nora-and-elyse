@@ -30,16 +30,16 @@ public class FewestMoveCalculator {
             
             moveEffieciently(tempStack, start, mid, end);   // Step 1
             gb.getCanvas().draw();
-            gb.getCanvas().pause(500);
+            //gb.getCanvas().pause(500);
             String move = "" + start + end;
             System.out.println("MOVE:   " + move);
             gm.shuffleStacks(move, gb);             // Step 2
             gb.getCanvas().draw();
-            gb.getCanvas().pause(500);
+            //gb.getCanvas().pause(500);
 
             moveEffieciently(tempStack, mid, end, start);
             gb.getCanvas().draw();
-            gb.getCanvas().pause(500);
+            //gb.getCanvas().pause(500);
 
             }
         }
