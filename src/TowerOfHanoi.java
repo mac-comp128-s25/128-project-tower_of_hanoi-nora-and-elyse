@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class TowerOfHanoi {
-    private static int level = 1;
+    private static int level = 2;
     public TowerOfHanoi(){
 
     }    
@@ -23,6 +23,7 @@ public class TowerOfHanoi {
         //     }
         // }
         gm.runRound(level, gb);
+       // gb.nextLevel();
 
     }
 

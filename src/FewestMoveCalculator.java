@@ -19,7 +19,7 @@ public class FewestMoveCalculator {
             gm.shuffleStacks(move, gb);
             gb.getCanvas().draw();
         }
-        else if (!dm.checkIfDone(gb.getStacks(), gb)){
+        else if (!dm.checkIfDone(gb)){
             Deque<Disk> tempStack = new ArrayDeque<>();
             tempStack.addAll(stack);
             System.out.println("og: " +stack.toString());

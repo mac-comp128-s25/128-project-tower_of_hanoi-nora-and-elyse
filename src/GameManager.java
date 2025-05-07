@@ -36,13 +36,14 @@ public class GameManager {
                     iter.remove();
                     System.out.println("removed");
                 }
-                // if (dm.checkIfDone(gb.getStacks(), gb)) {
+                // if (dm.checkIfDone( gb)) {
                 //     System.out.println("You finished the level!");
                 //     gb.setSolved(true);
                 //     gb.nextLevel(); 
                 // }
                 
-                animation.update(1);
+                animation.update(3);
+                //gb.nextLevel();
             }
             
 
@@ -66,6 +67,10 @@ public class GameManager {
 
     public void addAnimation(Animate a){
         animations.add(a);
+    }
+
+    public void clearAnimations(){
+        animations = new LinkedList<Animate>();
     }
 
     public void shuffleStacks(String answer, GameBoard gb){
@@ -130,6 +135,7 @@ public class GameManager {
     }
 
     public void setBoard(int i, GameBoard gb){
+        gb.clearStacks();
         dm = new DiskManager(gb.getCanvas());
         gb.setDiskManager(dm);
         Point positionTracker = new Point((172-i*7), (430));
