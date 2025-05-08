@@ -116,9 +116,9 @@ public class GameBoard {
         distancesFromBottom[0] = 430 - (20 * level);
         distancesFromBottom[1] = 430;
         distancesFromBottom[2] = 430;
-        // stack1.clear();
-        // stack2.clear();
-        // stack3.clear();
+        stack1.clear();
+        stack2.clear();
+        stack3.clear();
         board.removeAll();
         board.add(constructBoard());
         board.draw();
@@ -144,7 +144,7 @@ public class GameBoard {
         }
         Point startPoint = d.getRectangle().getPosition();
         Point endPoint = new Point(xPos, distancesFromBottom[newStack-1]);
-        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle(), dm, this, gm));
+        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle()));
         //d.getRectangle().setPosition(new Point(xPos, distancesFromBottom[newStack-1]));
         distancesFromBottom[newStack-1] -= 20;
         distancesFromBottom[originalStack-1] += 20;
@@ -239,17 +239,17 @@ public class GameBoard {
             gm.setNumMoves(0);
             nextLevel();
             fmc.moveEffieciently(stack1, 1, 3, 2);
-            //dm.checkIfDone(getStacks(), this);
+            dm.checkIfDone(getStacks(), this);
             nextLevel();
         }
         if (answer.length() >= 2) {
             gm.shuffleStacks(answer, this);  
             
-            // if (dm.checkIfDone(getStacks(), this)) {
-            //     System.out.println("You finished the level!");
-            //     solved = true;
-            //     nextLevel(); 
-            // }
+            if (dm.checkIfDone(getStacks(), this)) {
+                System.out.println("You finished the level!");
+                solved = true;
+                nextLevel(); 
+            }
 
             answer = "";
             setUpButtons();
@@ -263,9 +263,10 @@ public class GameBoard {
                 winScreen();
             }
             resetStacks();
-            //solved = false;
+            solved = false;
             gm.runRound(level, this);
-        } 
+        } else {
+        }
     }
     
 
@@ -340,12 +341,6 @@ public class GameBoard {
 
     public void setSolved(boolean b){
         solved = b;
-    }
-
-    public void clearStacks(){
-        stack1.clear();
-        stack2.clear();
-        stack3.clear();
     }
 
 }
