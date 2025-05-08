@@ -69,7 +69,7 @@ public class GameManager {
     }
 
     public void shuffleStacks(String answer, GameBoard gb){
-        System.out.println("Answer1: " + answer);
+        Disk tempDisk = null;
         if(answer.length()>1){
             if(!checkMove(answer, gb)){
                 GraphicsText invalid = new GraphicsText("Invalid move, try again!");
@@ -80,18 +80,13 @@ public class GameManager {
                
                 gb.getCanvas().pause(3000);
                 coverInvalid(gb);
-                System.out.println("Invalid"); // delete later
                 
-                // System.out.println("Invalid move, try again");
-                // System.out.println("Enter Move: ");
-                // Scanner scan = new Scanner(System.in);
-                // answer = scan.nextLine();
+               
             }
 
-        Disk tempDisk = null;
-        System.out.println("Answer2: " + answer);
+       
 
-        if(answer.substring(0,1).equals("1")){
+        else if(answer.substring(0,1).equals("1")){
             if(answer.substring(1).equals("2")){
                 tempDisk = gb.removeStack1();
                 gb.addStack2(tempDisk);
@@ -104,7 +99,7 @@ public class GameManager {
             }
             numMoves++;
         }
-        if(answer.substring(0,1).equals("2")){
+        else if(answer.substring(0,1).equals("2")){
             if(answer.substring(1).equals("1")){
                 tempDisk = gb.removeStack2();
                 gb.addStack1(tempDisk);
@@ -117,7 +112,7 @@ public class GameManager {
             }
             numMoves++;
         }
-        if(answer.substring(0,1).equals("3")){
+        else if(answer.substring(0,1).equals("3")){
             if(answer.substring(1).equals("1")){
                 tempDisk = gb.removeStack3();
                 gb.addStack1(tempDisk);
@@ -130,20 +125,9 @@ public class GameManager {
             }
             numMoves++;
         }
-        System.out.println("Answer3: " + answer);
 
         updateConstantText(gb);
-        if(!checkMove(answer, gb)){
-            int num1 =  Integer.parseInt(answer.substring(0,1)) -1;
-            int num2 = Integer.parseInt(answer.substring(1)) -1;
-        System.out.println("num 1 " + num1);
-        System.out.println("num 2 " + num2);
-            if(!gb.getStacks().get(num1).isEmpty()) {
-                gb.getStacks().get(num1).add(gb.getStacks().get(num2).pop());
-                gb.moveDisk(tempDisk, num2+1, num1+1);
-            }
-        }
-        System.out.println("Answer4: " + answer);
+        
 
     }
     }
@@ -166,9 +150,9 @@ public class GameManager {
     public boolean checkMove(String answer, GameBoard gb) {
         int num1 =  Integer.parseInt(answer.substring(0,1)) -1;
         int num2 = Integer.parseInt(answer.substring(1)) -1;
-        // System.out.println("num 1 " + num1);
-        // System.out.println("num 2 " + num2);
-
+        System.out.println("num 1 in checkmove  " + num1);
+        System.out.println("num 2 in checkmove " + num2);
+        
         ArrayList<Deque<Disk>> stacks = gb.getStacks();
         if(stacks.get(num1).isEmpty()){
             return false;

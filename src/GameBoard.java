@@ -384,4 +384,13 @@ public class GameBoard {
         
     }
 
+    public int[] getDistancesFromBottom(){
+        return distancesFromBottom;
+    }
+
+    public void updateDistancesFromBottom(int newStack, int originalStack){
+        distancesFromBottom[newStack-1] -= 20;
+        distancesFromBottom[originalStack-1] += 20;
+    }
+
 }
