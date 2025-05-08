@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsText;
@@ -41,8 +42,7 @@ public class GameManager {
                 //     gb.setSolved(true);
                 //     gb.nextLevel(); 
                 // }
-                
-                animation.update(1);
+                animation.update(3);
             }
             
 
@@ -69,6 +69,7 @@ public class GameManager {
     }
 
     public void shuffleStacks(String answer, GameBoard gb){
+        System.out.println("Answer1: " + answer);
         if(answer.length()>1){
             if(!checkMove(answer, gb)){
                 GraphicsText invalid = new GraphicsText("Invalid move, try again!");
@@ -76,6 +77,7 @@ public class GameManager {
                 invalid.setFont(FontStyle.BOLD, 30);
                 gb.getCanvas().add(invalid);
                 gb.getCanvas().draw();
+               
                 gb.getCanvas().pause(3000);
                 coverInvalid(gb);
                 System.out.println("Invalid"); // delete later
@@ -85,15 +87,18 @@ public class GameManager {
                 // Scanner scan = new Scanner(System.in);
                 // answer = scan.nextLine();
             }
-        
+
+        Disk tempDisk = null;
+        System.out.println("Answer2: " + answer);
+
         if(answer.substring(0,1).equals("1")){
             if(answer.substring(1).equals("2")){
-                Disk tempDisk = gb.removeStack1();
+                tempDisk = gb.removeStack1();
                 gb.addStack2(tempDisk);
                 gb.moveDisk(tempDisk, 2, 1);
             }
             if(answer.substring(1).equals("3")){
-                Disk tempDisk = gb.removeStack1();
+                tempDisk = gb.removeStack1();
                 gb.addStack3(tempDisk);
                 gb.moveDisk(tempDisk, 3, 1);
             }
@@ -101,12 +106,12 @@ public class GameManager {
         }
         if(answer.substring(0,1).equals("2")){
             if(answer.substring(1).equals("1")){
-                Disk tempDisk = gb.removeStack2();
+                tempDisk = gb.removeStack2();
                 gb.addStack1(tempDisk);
                 gb.moveDisk(tempDisk, 1, 2);
             }
             if(answer.substring(1).equals("3")){
-                Disk tempDisk = gb.removeStack2();
+                tempDisk = gb.removeStack2();
                 gb.addStack3(tempDisk);
                 gb.moveDisk(tempDisk, 3, 2);
             }
@@ -114,18 +119,32 @@ public class GameManager {
         }
         if(answer.substring(0,1).equals("3")){
             if(answer.substring(1).equals("1")){
-                Disk tempDisk = gb.removeStack3();
+                tempDisk = gb.removeStack3();
                 gb.addStack1(tempDisk);
                 gb.moveDisk(tempDisk, 1, 3);
             }
             if(answer.substring(1).equals("2")){
-                Disk tempDisk = gb.removeStack3();
+                tempDisk = gb.removeStack3();
                 gb.addStack2(tempDisk);
                 gb.moveDisk(tempDisk, 2, 3);
             }
             numMoves++;
         }
+        System.out.println("Answer3: " + answer);
+
         updateConstantText(gb);
+        if(!checkMove(answer, gb)){
+            int num1 =  Integer.parseInt(answer.substring(0,1)) -1;
+            int num2 = Integer.parseInt(answer.substring(1)) -1;
+        System.out.println("num 1 " + num1);
+        System.out.println("num 2 " + num2);
+            if(!gb.getStacks().get(num1).isEmpty()) {
+                gb.getStacks().get(num1).add(gb.getStacks().get(num2).pop());
+                gb.moveDisk(tempDisk, num2+1, num1+1);
+            }
+        }
+        System.out.println("Answer4: " + answer);
+
     }
     }
 
@@ -147,6 +166,9 @@ public class GameManager {
     public boolean checkMove(String answer, GameBoard gb) {
         int num1 =  Integer.parseInt(answer.substring(0,1)) -1;
         int num2 = Integer.parseInt(answer.substring(1)) -1;
+        // System.out.println("num 1 " + num1);
+        // System.out.println("num 2 " + num2);
+
         ArrayList<Deque<Disk>> stacks = gb.getStacks();
         if(stacks.get(num1).isEmpty()){
             return false;

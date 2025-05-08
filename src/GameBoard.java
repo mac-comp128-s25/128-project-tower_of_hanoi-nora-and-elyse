@@ -144,7 +144,7 @@ public class GameBoard {
         }
         Point startPoint = d.getRectangle().getPosition();
         Point endPoint = new Point(xPos, distancesFromBottom[newStack-1]);
-        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle()));
+        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle(), gm, dm, this));
         //d.getRectangle().setPosition(new Point(xPos, distancesFromBottom[newStack-1]));
         distancesFromBottom[newStack-1] -= 20;
         distancesFromBottom[originalStack-1] += 20;
@@ -246,9 +246,12 @@ public class GameBoard {
             gm.shuffleStacks(answer, this);  
             
             if (dm.checkIfDone(getStacks(), this)) {
+                // String s = answer.substring(1);
+                // s = s + answer.substring(0, 1);
+                // gm.shuffleStacks(s, this);
                 System.out.println("You finished the level!");
                 solved = true;
-                nextLevel(); 
+                //nextLevel(); 
             }
 
             answer = "";
@@ -260,13 +263,47 @@ public class GameBoard {
         level++;
         if (level <= 9) {
             if(solved){
+                // Disk d = null;
+                // if(!stack1.isEmpty()) {
+                //     double xPos = 617 -  ((stack1.peek().getRectangle().getWidth()-10)/2);
+                //     Point endPoint = new Point(xPos, distancesFromBottom[2]);
+                //     d = stack1.peek();
+                //     Animate a = new Animate(stack1.peek().getRectangle().getPosition(), endPoint, stack1.pop().getRectangle(), gm, dm, this);
+                //     a.update(3);
+                // }
+                // if(!stack2.isEmpty()) {
+                //     double xPos = 617 -  ((stack2.peek().getRectangle().getWidth()-10)/2);
+                //     Point endPoint = new Point(xPos, distancesFromBottom[2]);
+                //     d = stack2.peek();
+                //     Animate a = new Animate(stack2.peek().getRectangle().getPosition(), endPoint, stack2.pop().getRectangle(), gm, dm, this);
+                //     a.update(3);
+                // }
+                // board.draw();
                 winScreen();
+                
             }
             resetStacks();
             solved = false;
-            gm.runRound(level, this);
-        } else {
-        }
+            //gm.runRound(level, this);
+            //this is what runRound does before animate
+            setLevel(level);
+            gm.setBoard(level, this);
+            setUpButtons();
+       
+           
+        
+        gm.updateConstantText(this);
+        
+        
+        printStacks();
+        // if(level <9){
+        //   return true;
+        // }
+        // else{
+        //     return false;
+        // }
+        // } else {
+         }
     }
     
 
@@ -341,6 +378,10 @@ public class GameBoard {
 
     public void setSolved(boolean b){
         solved = b;
+    }
+
+    public void removeStack(int num) {
+        
     }
 
 }
