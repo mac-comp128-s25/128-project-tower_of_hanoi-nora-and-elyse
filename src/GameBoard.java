@@ -62,13 +62,13 @@ public class GameBoard {
         Rectangle bottomRectangle = new Rectangle(new Point(50, 450), new Point(700, 10));
         bottomRectangle.setFillColor(Color.DARK_GRAY);
         gg.add(bottomRectangle);
-        Rectangle leftRectangle = new Rectangle(new Point(167, 175), new Point(10, 275));
+        Rectangle leftRectangle = new Rectangle(new Point(167, 200), new Point(10, 250));
         leftRectangle.setFillColor(Color.DARK_GRAY);
         gg.add(leftRectangle);
-        Rectangle middRectangle = new Rectangle(new Point(400, 175), new Point(10, 275));
+        Rectangle middRectangle = new Rectangle(new Point(400, 200), new Point(10, 250));
         middRectangle.setFillColor(Color.DARK_GRAY);
         gg.add(middRectangle);
-        Rectangle righRectangle = new Rectangle(new Point(617, 175), new Point(10, 275));
+        Rectangle righRectangle = new Rectangle(new Point(617, 200), new Point(10, 250));
         righRectangle.setFillColor(Color.DARK_GRAY);
         gg.add(righRectangle);
 
@@ -295,7 +295,7 @@ public class GameBoard {
         gm.updateConstantText(this);
         
         
-        printStacks();
+        //printStacks();
         // if(level <9){
         //   return true;
         // }

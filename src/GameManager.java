@@ -30,7 +30,7 @@ public class GameManager {
         
         gb.getCanvas().animate( (dt) -> {
             Iterator<Animate> iter = animations.iterator();
-            System.out.println(animations.toString());
+            // System.out.println(animations.toString());
             while(iter.hasNext()){
                 Animate animation = iter.next();
                 if(animation.check()){
@@ -42,7 +42,8 @@ public class GameManager {
                 //     gb.setSolved(true);
                 //     gb.nextLevel(); 
                 // }
-                animation.update(3);
+                //animation.update(3);
+                animation.updateOver(5);
             }
             
 
@@ -55,7 +56,7 @@ public class GameManager {
         updateConstantText(gb);
         
         
-        gb.printStacks();
+       // gb.printStacks();
         if(i <9){
           return true;
         }
