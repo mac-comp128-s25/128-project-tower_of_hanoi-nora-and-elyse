@@ -174,9 +174,9 @@ public class GameManager {
 
     public void coverMoves(GameBoard gb){
         Rectangle cover = new Rectangle(500, 470, 270, 25);
-        cover.setFillColor(Color.WHITE);
+        cover.setFillColor(new Color(238,214,208));
         cover.setFilled(true);
-        cover.setStrokeColor(Color.WHITE);
+        cover.setStrokeColor(new Color(238,214,208));
         cover.setStroked(true);
         gb.getCanvas().add(cover);
         gb.getCanvas().draw();
@@ -184,9 +184,9 @@ public class GameManager {
 
     public void coverInvalid(GameBoard gb){
         Rectangle cover = new Rectangle(215, 15, 400, 50);
-        cover.setFillColor(Color.WHITE);
+        cover.setFillColor(new Color(238,214,208));
         cover.setFilled(true);
-        cover.setStrokeColor(Color.WHITE);
+        cover.setStrokeColor(new Color(238,214,208));
         cover.setStroked(true);
         gb.getCanvas().add(cover);
         gb.getCanvas().draw();

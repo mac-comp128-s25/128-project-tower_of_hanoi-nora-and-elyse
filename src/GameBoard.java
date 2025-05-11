@@ -6,6 +6,7 @@ import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
 import java.awt.Color;
+import java.awt.Paint;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -37,6 +38,7 @@ public class GameBoard {
     public GameBoard(GameManager gm){
         level = 0;
         board = new CanvasWindow("Tower of Hanoi", 800, 500);
+        board.setBackground(new Color(238,214,208));
         structure = constructBoard();
         board.add(structure);
         board.draw();
@@ -159,6 +161,7 @@ public class GameBoard {
         tower1 = new Button("Tower 1");
         tower2 = new Button("Tower 2");
         tower3 = new Button("Tower 3");
+        
         help = new Button("Help");
         
         board.add(tower1, 127, 135);
