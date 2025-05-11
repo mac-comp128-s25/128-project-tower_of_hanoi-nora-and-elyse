@@ -27,8 +27,6 @@ public class Animate {
         elapsedTime += dt;
         double x = start.getX() + (end.getX() -start.getX()) * (elapsedTime/totalLength);
         double y = start.getY() + (end.getY() -start.getY()) * (elapsedTime/totalLength);
-        System.out.println("x: " + x + " y: " + y);
-        System.out.println("end " + end);
      
         if(!check()){
             movingObj.setPosition(new Point (x, y));
@@ -36,9 +34,7 @@ public class Animate {
         else if (dm.checkIfDone(gb.getStacks(), gb)) {
             gb.nextLevel();
         }
-        else{
-            System.out.println("Stop");
-        }
+        
         
       
     }
@@ -72,7 +68,6 @@ public class Animate {
             }
 
         }
-        System.out.println("new pt: " + x + " "+ y);
         if(!check()){
             movingObj.setPosition(new Point (x, y));
         } 

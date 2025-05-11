@@ -12,12 +12,15 @@ public class Disk {
         this.diameter = diameter;
         this.position = position;
         disk = createRectangle();
-
+       
     }
 
     private Rectangle createRectangle(){
+        Color[] colorOptions = {new Color(252, 120, 158), new Color(240,144,100), new Color(245,201,133), new Color (242,151,129), new Color(163,129,242), new Color(240,129,214), new Color(129,242,208), new Color(129,234,242), new Color(129,196,242)};
         Rectangle rectangle = new Rectangle(position, new Point(diameter, 20));
-        rectangle.setFillColor(Color.BLUE);
+        int randint = (int) (Math.random() * 8 ) + 1;
+
+        rectangle.setFillColor(colorOptions[randint]);
 
         return rectangle;
     }

@@ -40,7 +40,6 @@ public class FewestMoveCalculator {
         next.onClick(() -> {
             if (moveIterator.hasNext()) {
                 String move = moveIterator.next();
-                System.out.println("MOVE: " + move);
                 gm.shuffleStacks(move, gb);
                 gb.getCanvas().draw();
             }

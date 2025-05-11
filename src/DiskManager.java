@@ -27,7 +27,6 @@ public class DiskManager {
                     }
                 }
             }
-            System.out.println("success!!");
             gb.setSolved(true);
             return true;
         }

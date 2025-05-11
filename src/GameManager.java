@@ -32,7 +32,6 @@ public class GameManager {
                 Animate animation = iter.next();
                 if(animation.check()){
                     iter.remove();
-                    System.out.println("removed");
                 }
 
                 //animation.update(3); //<- Don't delete: alternate animation path
@@ -128,7 +127,6 @@ public class GameManager {
 
             Disk d = new Disk(j*14, positionTracker);
             gb.addStack1(d);
-            System.out.println("dimensions" + i*14);
             positionTracker = new Point((172-(j-1)*7), positionTracker.getY()-20);
             dm.addToBoard(d);
             gb.getCanvas().draw();
@@ -138,8 +136,6 @@ public class GameManager {
     public boolean checkMove(String answer, GameBoard gb) {
         int num1 =  Integer.parseInt(answer.substring(0,1)) -1;
         int num2 = Integer.parseInt(answer.substring(1)) -1;
-        System.out.println("num 1 in checkmove  " + num1);
-        System.out.println("num 2 in checkmove " + num2);
         
         ArrayList<Deque<Disk>> stacks = gb.getStacks();
         if(stacks.get(num1).isEmpty()){

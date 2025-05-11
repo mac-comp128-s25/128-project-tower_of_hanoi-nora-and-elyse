@@ -130,7 +130,6 @@ public class GameBoard {
         Point startPoint = d.getRectangle().getPosition();
         Point endPoint = new Point(xPos, distancesFromBottom[newStack-1]);
         gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle(), gm, dm, this));
-        System.out.println("animation added");
         distancesFromBottom[newStack-1] -= 20;
         distancesFromBottom[originalStack-1] += 20;
 
@@ -179,9 +178,7 @@ public class GameBoard {
         help.onClick(() -> handleButtonClick(5)); 
     }
     private void handleButtonClick(int towerNumber) {
-        System.out.println("clicked " + towerNumber);
         answer = answer + buttonPressed(towerNumber);
-        System.out.println(answer);
         indicateButton();
         if(towerNumber == 5){
             level = level -1;
@@ -195,7 +192,6 @@ public class GameBoard {
             gm.shuffleStacks(answer, this);  
             
             if (dm.checkIfDone(getStacks(), this)) {
-                System.out.println("You finished the level!");
                 solved = true;
             }
 
