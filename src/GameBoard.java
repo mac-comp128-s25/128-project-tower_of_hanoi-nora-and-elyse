@@ -1,21 +1,15 @@
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
-
-
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.Queue;
-import java.util.Scanner;
-import java.util.Iterator;
+
 
 public class GameBoard {
     private String answer;
@@ -52,7 +46,6 @@ public class GameBoard {
         distancesFromBottom[2] = 430;
         this.gm = gm;
         dm = null;
-        //setUpButtons();
         minMoves = 1;
         
     }
@@ -123,7 +116,7 @@ public class GameBoard {
 
     }
 
-    public void moveDisk(Disk d, int newStack, int originalStack, boolean isAutomatic){
+    public void moveDisk(Disk d, int newStack, int originalStack){
         double xPos = 0;
         if(newStack ==1){
             xPos = 167  - ((d.getRectangle().getWidth()-10)/2);
@@ -136,7 +129,7 @@ public class GameBoard {
         }
         Point startPoint = d.getRectangle().getPosition();
         Point endPoint = new Point(xPos, distancesFromBottom[newStack-1]);
-        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle(), gm, dm, this, isAutomatic));
+        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle(), gm, dm, this));
         System.out.println("animation added");
         distancesFromBottom[newStack-1] -= 20;
         distancesFromBottom[originalStack-1] += 20;
@@ -162,42 +155,6 @@ public class GameBoard {
         gm.setNumMoves(0);
     }
 
-    // public String setUpButtons() {
-    //     tower1 = new Button("Tower 1");
-    //     tower2 = new Button("Tower 2");
-    //     tower3 = new Button("Tower 3");
-    //     board.add(tower1, 167 -40, 175 - 40);
-    //     board.add(tower2,400 -40, 175 - 40);
-    //     board.add(tower3,617 -40, 175 - 40);
-    //     board.draw();
-    //     button1 = false;
-    //     button2 = false;
-    //     button3 = false;
-    //     answer = "";
-    //     while(answer.length() < 2){
-    //         tower1.onClick(() -> {
-    //             System.out.println("clicked 1");
-    //             answer = buttonPressed(1);
-    //             indicateButton();
-    //             button1 = true;
-    //         });
-
-    //         tower2.onClick(() -> {
-    //             System.out.println("clicked 2");
-    //             answer = buttonPressed(2);
-    //             indicateButton();
-    //             button2 = true;
-    //         });
-
-    //         tower3.onClick(() -> {
-    //             System.out.println("clicked 3");
-    //             answer = buttonPressed(3);
-    //             indicateButton();
-    //             button3 = true;
-    //         });
-    //     }
-    //     return answer;
-    // }
 
     public void setUpButtons() {
         tower1 = new Button("Tower 1");
@@ -219,7 +176,7 @@ public class GameBoard {
         tower1.onClick(() -> handleButtonClick(1));
         tower2.onClick(() -> handleButtonClick(2));
         tower3.onClick(() -> handleButtonClick(3));
-        help.onClick(() -> handleButtonClick(5)); // triggers different handling 
+        help.onClick(() -> handleButtonClick(5)); 
     }
     private void handleButtonClick(int towerNumber) {
         System.out.println("clicked " + towerNumber);
@@ -233,18 +190,13 @@ public class GameBoard {
             fmc.moveEfficiently(stack1, 1, 3, 2);
             fmc.setupMoveExecution();
             dm.checkIfDone(getStacks(), this);
-            //nextLevel();
         }
         if (answer.length() >= 2) {
-            gm.shuffleStacks(answer, this, false);  
+            gm.shuffleStacks(answer, this);  
             
             if (dm.checkIfDone(getStacks(), this)) {
-                // String s = answer.substring(1);
-                // s = s + answer.substring(0, 1);
-                // gm.shuffleStacks(s, this);
                 System.out.println("You finished the level!");
                 solved = true;
-                //nextLevel(); 
             }
 
             answer = "";
@@ -256,29 +208,12 @@ public class GameBoard {
         level++;
         if (level <= 9) {
             if(solved){
-                // Disk d = null;
-                // if(!stack1.isEmpty()) {
-                //     double xPos = 617 -  ((stack1.peek().getRectangle().getWidth()-10)/2);
-                //     Point endPoint = new Point(xPos, distancesFromBottom[2]);
-                //     d = stack1.peek();
-                //     Animate a = new Animate(stack1.peek().getRectangle().getPosition(), endPoint, stack1.pop().getRectangle(), gm, dm, this);
-                //     a.update(3);
-                // }
-                // if(!stack2.isEmpty()) {
-                //     double xPos = 617 -  ((stack2.peek().getRectangle().getWidth()-10)/2);
-                //     Point endPoint = new Point(xPos, distancesFromBottom[2]);
-                //     d = stack2.peek();
-                //     Animate a = new Animate(stack2.peek().getRectangle().getPosition(), endPoint, stack2.pop().getRectangle(), gm, dm, this);
-                //     a.update(3);
-                // }
-                // board.draw();
+               
                 winScreen();
                 
             }
             resetStacks();
             solved = false;
-            //gm.runRound(level, this);
-            //this is what runRound does before animate
             setLevel(level);
             gm.setBoard(level, this);
             setUpButtons();
@@ -288,14 +223,6 @@ public class GameBoard {
         gm.updateConstantText(this);
         
         
-        //printStacks();
-        // if(level <9){
-        //   return true;
-        // }
-        // else{
-        //     return false;
-        // }
-        // } else {
          }
     }
     
@@ -340,15 +267,9 @@ public class GameBoard {
         else{
             sequence = "" + pressed;
         }
-        // if(!sequence.equals("0")){
-        //     gm.shuffleStacks(sequence, this);
-        // }
 
         return sequence;
-        // if(dm.checkIfDone(getStacks())){
-            
-        // }
-        
+
     }
 
     public void indicateButton() {

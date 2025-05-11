@@ -4,8 +4,6 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsText;
@@ -30,33 +28,22 @@ public class GameManager {
         
         gb.getCanvas().animate( (dt) -> {
             Iterator<Animate> iter = animations.iterator();
-            // System.out.println(animations.toString());
             while(iter.hasNext()){
                 Animate animation = iter.next();
                 if(animation.check()){
                     iter.remove();
                     System.out.println("removed");
                 }
-                // if (dm.checkIfDone(gb.getStacks(), gb)) {
-                //     System.out.println("You finished the level!");
-                //     gb.setSolved(true);
-                //     gb.nextLevel(); 
-                // }
-                //animation.update(3);
+
+                //animation.update(3); //<- Don't delete: alternate animation path
                 animation.updateOver(5);
             }
-            
 
         });
 
         gb.setUpButtons();
-       
-           
         
         updateConstantText(gb);
-        
-        
-       // gb.printStacks();
         if(i <9){
           return true;
         }
@@ -69,7 +56,7 @@ public class GameManager {
         animations.add(a);
     }
 
-    public void shuffleStacks(String answer, GameBoard gb, boolean isAutomatic){
+    public void shuffleStacks(String answer, GameBoard gb){
         Disk tempDisk = null;
         if(answer.length()>1){
             if(!checkMove(answer, gb)){
@@ -91,12 +78,12 @@ public class GameManager {
             if(answer.substring(1).equals("2")){
                 tempDisk = gb.removeStack1();
                 gb.addStack2(tempDisk);
-                gb.moveDisk(tempDisk, 2, 1, isAutomatic);
+                gb.moveDisk(tempDisk, 2, 1);
             }
             if(answer.substring(1).equals("3")){
                 tempDisk = gb.removeStack1();
                 gb.addStack3(tempDisk);
-                gb.moveDisk(tempDisk, 3, 1, isAutomatic);
+                gb.moveDisk(tempDisk, 3, 1);
             }
             numMoves++;
         }
@@ -104,12 +91,12 @@ public class GameManager {
             if(answer.substring(1).equals("1")){
                 tempDisk = gb.removeStack2();
                 gb.addStack1(tempDisk);
-                gb.moveDisk(tempDisk, 1, 2, isAutomatic);
+                gb.moveDisk(tempDisk, 1, 2);
             }
             if(answer.substring(1).equals("3")){
                 tempDisk = gb.removeStack2();
                 gb.addStack3(tempDisk);
-                gb.moveDisk(tempDisk, 3, 2, isAutomatic);
+                gb.moveDisk(tempDisk, 3, 2);
             }
             numMoves++;
         }
@@ -117,12 +104,12 @@ public class GameManager {
             if(answer.substring(1).equals("1")){
                 tempDisk = gb.removeStack3();
                 gb.addStack1(tempDisk);
-                gb.moveDisk(tempDisk, 1, 3, isAutomatic);
+                gb.moveDisk(tempDisk, 1, 3);
             }
             if(answer.substring(1).equals("2")){
                 tempDisk = gb.removeStack3();
                 gb.addStack2(tempDisk);
-                gb.moveDisk(tempDisk, 2, 3, isAutomatic);
+                gb.moveDisk(tempDisk, 2, 3);
             }
             numMoves++;
         }

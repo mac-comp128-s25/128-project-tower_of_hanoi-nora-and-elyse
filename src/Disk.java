@@ -1,13 +1,11 @@
 import java.awt.Color;
 
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
 public class Disk {
     private int diameter;
     private Point position;
-    private boolean correctPlace;
     private Rectangle disk;
 
     public Disk(int diameter, Point position){

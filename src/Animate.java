@@ -7,21 +7,17 @@ public class Animate {
     private Point end;
     private double elapsedTime;
     private double totalLength;
-    private GameManager gm;
     private DiskManager dm;
     private GameBoard gb;
     private int stepTracker;
-    private boolean isAutomatic;
 
-    public Animate(Point start, Point end, GraphicsObject movingObj, GameManager gm, DiskManager dm, GameBoard gb, boolean isAutomatic){ 
+    public Animate(Point start, Point end, GraphicsObject movingObj, GameManager gm, DiskManager dm, GameBoard gb){ 
         this.movingObj = movingObj;
         this.start = start;
         this.end = end;
         elapsedTime = 0;
         totalLength = start.distance(end);
-        this.gm = gm;
         this.dm = dm;
-        this.isAutomatic = isAutomatic;
         this.gb = gb;
         stepTracker = 0;
     }
@@ -38,10 +34,7 @@ public class Animate {
             movingObj.setPosition(new Point (x, y));
         } 
         else if (dm.checkIfDone(gb.getStacks(), gb)) {
-                // System.out.println("You finished the level!");
-                // //gb.setSolved(true);
             gb.nextLevel();
-               //gb.winScreen();
         }
         else{
             System.out.println("Stop");
