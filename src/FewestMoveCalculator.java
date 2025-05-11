@@ -34,7 +34,7 @@ public class FewestMoveCalculator {
         moveIterator = moves.iterator();
     
         Button next = new Button("Next Step");
-        gb.getCanvas().add(next, 0, 20);
+        gb.getCanvas().add(next, 0, 25);
         gb.getCanvas().draw();
     
         next.onClick(() -> {
