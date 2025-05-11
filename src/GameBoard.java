@@ -104,14 +104,6 @@ public class GameBoard {
        return stack3.pop();
     }
 
-    //delete evemtually
-    public void printStacks(){
-        System.out.println(stack1.toString());
-        System.out.println(stack2.toString());
-        System.out.println(stack3.toString());
-
-    }
-
     public void resetStacks(){
         distancesFromBottom[0] = 430 - (20 * level);
         distancesFromBottom[1] = 430;
@@ -131,7 +123,7 @@ public class GameBoard {
 
     }
 
-    public void moveDisk(Disk d, int newStack, int originalStack){
+    public void moveDisk(Disk d, int newStack, int originalStack, boolean isAutomatic){
         double xPos = 0;
         if(newStack ==1){
             xPos = 167  - ((d.getRectangle().getWidth()-10)/2);
@@ -144,8 +136,8 @@ public class GameBoard {
         }
         Point startPoint = d.getRectangle().getPosition();
         Point endPoint = new Point(xPos, distancesFromBottom[newStack-1]);
-        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle(), gm, dm, this));
-        //d.getRectangle().setPosition(new Point(xPos, distancesFromBottom[newStack-1]));
+        gm.addAnimation(new Animate(startPoint, endPoint, d.getRectangle(), gm, dm, this, isAutomatic));
+        System.out.println("animation added");
         distancesFromBottom[newStack-1] -= 20;
         distancesFromBottom[originalStack-1] += 20;
 
@@ -238,12 +230,13 @@ public class GameBoard {
             level = level -1;
             gm.setNumMoves(0);
             nextLevel();
-            fmc.moveEffieciently(stack1, 1, 3, 2);
+            fmc.moveEfficiently(stack1, 1, 3, 2);
+            fmc.setupMoveExecution();
             dm.checkIfDone(getStacks(), this);
-            nextLevel();
+            //nextLevel();
         }
         if (answer.length() >= 2) {
-            gm.shuffleStacks(answer, this);  
+            gm.shuffleStacks(answer, this, false);  
             
             if (dm.checkIfDone(getStacks(), this)) {
                 // String s = answer.substring(1);

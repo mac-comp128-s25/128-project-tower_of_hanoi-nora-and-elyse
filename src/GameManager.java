@@ -69,7 +69,7 @@ public class GameManager {
         animations.add(a);
     }
 
-    public void shuffleStacks(String answer, GameBoard gb){
+    public void shuffleStacks(String answer, GameBoard gb, boolean isAutomatic){
         Disk tempDisk = null;
         if(answer.length()>1){
             if(!checkMove(answer, gb)){
@@ -91,12 +91,12 @@ public class GameManager {
             if(answer.substring(1).equals("2")){
                 tempDisk = gb.removeStack1();
                 gb.addStack2(tempDisk);
-                gb.moveDisk(tempDisk, 2, 1);
+                gb.moveDisk(tempDisk, 2, 1, isAutomatic);
             }
             if(answer.substring(1).equals("3")){
                 tempDisk = gb.removeStack1();
                 gb.addStack3(tempDisk);
-                gb.moveDisk(tempDisk, 3, 1);
+                gb.moveDisk(tempDisk, 3, 1, isAutomatic);
             }
             numMoves++;
         }
@@ -104,12 +104,12 @@ public class GameManager {
             if(answer.substring(1).equals("1")){
                 tempDisk = gb.removeStack2();
                 gb.addStack1(tempDisk);
-                gb.moveDisk(tempDisk, 1, 2);
+                gb.moveDisk(tempDisk, 1, 2, isAutomatic);
             }
             if(answer.substring(1).equals("3")){
                 tempDisk = gb.removeStack2();
                 gb.addStack3(tempDisk);
-                gb.moveDisk(tempDisk, 3, 2);
+                gb.moveDisk(tempDisk, 3, 2, isAutomatic);
             }
             numMoves++;
         }
@@ -117,12 +117,12 @@ public class GameManager {
             if(answer.substring(1).equals("1")){
                 tempDisk = gb.removeStack3();
                 gb.addStack1(tempDisk);
-                gb.moveDisk(tempDisk, 1, 3);
+                gb.moveDisk(tempDisk, 1, 3, isAutomatic);
             }
             if(answer.substring(1).equals("2")){
                 tempDisk = gb.removeStack3();
                 gb.addStack2(tempDisk);
-                gb.moveDisk(tempDisk, 2, 3);
+                gb.moveDisk(tempDisk, 2, 3, isAutomatic);
             }
             numMoves++;
         }

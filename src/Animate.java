@@ -11,8 +11,9 @@ public class Animate {
     private DiskManager dm;
     private GameBoard gb;
     private int stepTracker;
+    private boolean isAutomatic;
 
-    public Animate(Point start, Point end, GraphicsObject movingObj, GameManager gm, DiskManager dm, GameBoard gb){ 
+    public Animate(Point start, Point end, GraphicsObject movingObj, GameManager gm, DiskManager dm, GameBoard gb, boolean isAutomatic){ 
         this.movingObj = movingObj;
         this.start = start;
         this.end = end;
@@ -20,6 +21,7 @@ public class Animate {
         totalLength = start.distance(end);
         this.gm = gm;
         this.dm = dm;
+        this.isAutomatic = isAutomatic;
         this.gb = gb;
         stepTracker = 0;
     }
@@ -95,4 +97,6 @@ public class Animate {
             return false;
          }
     }
+
+ 
 }
