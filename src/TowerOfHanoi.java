@@ -3,7 +3,7 @@
  * Holds the main method, run method, and keeps track of level.
  */
 public class TowerOfHanoi {
-    private static int level = 5;
+    private static int level = 1;
     public TowerOfHanoi(){
 
     }    
