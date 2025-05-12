@@ -10,6 +10,10 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * @author Nora Betry and Elyse Quigley
+ * Handles animate call, has the movement manager, sets up board, and checks move validity. 
+ */
 public class GameManager {
     private DiskManager dm;
     private int numMoves;
@@ -22,6 +26,10 @@ public class GameManager {
         animations = new LinkedList<Animate>();
     }
 
+    /**
+     * Runs a round of the game, and animates according to the animations queue 
+     * @param i         The level 
+     */
     public boolean runRound(int i, GameBoard gb){
         gb.setLevel(i);
         setBoard(i, gb);
@@ -55,6 +63,9 @@ public class GameManager {
         animations.add(a);
     }
 
+    /**
+     * Moves a disk from stack to stack based on the answer given, ie "12" would move the top disk from tower 1 to 2
+     */
     public void shuffleStacks(String answer, GameBoard gb){
         Disk tempDisk = null;
         if(answer.length()>1){
@@ -119,6 +130,10 @@ public class GameManager {
     }
     }
 
+    /**
+     * Adds the initial disks to the canvas based on the level. 
+     * @param i       The level
+     */
     public void setBoard(int i, GameBoard gb){
         dm = new DiskManager(gb.getCanvas());
         gb.setDiskManager(dm);
@@ -133,6 +148,11 @@ public class GameManager {
         }
     }
 
+
+    /**
+     * Checks if the move is valid, meaning it is not moving from an empty stack or moving a large disk on top of a smaller one. 
+     * @return       true if the move is valid
+     */
     public boolean checkMove(String answer, GameBoard gb) {
         int num1 =  Integer.parseInt(answer.substring(0,1)) -1;
         int num2 = Integer.parseInt(answer.substring(1)) -1;
@@ -163,6 +183,9 @@ public class GameManager {
         return numMoves;
     }
 
+    /**
+     * Updates the user's number of moves and the minimum amount of moves text. 
+     */
     public void updateConstantText(GameBoard gb) {
         coverMoves(gb);
         GraphicsText constantText = new GraphicsText("Moves: " + numMoves + "   Minimum moves: " + gb.calculateMinMoves());
@@ -172,6 +195,9 @@ public class GameManager {
         gb.getCanvas().draw();
     }
 
+    /**
+     * Conceals the previous text on the canvas by covering it.
+     */
     public void coverMoves(GameBoard gb){
         Rectangle cover = new Rectangle(500, 470, 270, 25);
         cover.setFillColor(new Color(238,214,208));
@@ -182,6 +208,9 @@ public class GameManager {
         gb.getCanvas().draw();
     }
 
+    /**
+     * Conceals the previous text on the canvas by covering it.
+     */
     public void coverInvalid(GameBoard gb){
         Rectangle cover = new Rectangle(215, 15, 400, 50);
         cover.setFillColor(new Color(238,214,208));

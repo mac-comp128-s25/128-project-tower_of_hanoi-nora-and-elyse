@@ -1,6 +1,10 @@
 import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Point;
 
+/**
+ * @author Nora Betry and Elyse Quigley
+ * Animates movement of disks across the board and checks win logic
+ */
 public class Animate {
     private GraphicsObject movingObj;
     private Point start;
@@ -22,8 +26,12 @@ public class Animate {
         stepTracker = 0;
     }
 
+    /**
+     * Moves the graphicsObject a partial amount of the total distance it must travel, and checks if the level is completed
+     * Moves diagonally "as the crow flies"
+     * @param dt
+     */
     public void update(double dt){
-        
         elapsedTime += dt;
         double x = start.getX() + (end.getX() -start.getX()) * (elapsedTime/totalLength);
         double y = start.getY() + (end.getY() -start.getY()) * (elapsedTime/totalLength);
@@ -38,7 +46,11 @@ public class Animate {
         
       
     }
-
+    /**
+     * Moves the graphicsObject a partial amount of the total distance it must travel, and checks if the level is completed
+     * Moves up off the tower, over to the new tower, and down. 
+     * @param dt
+     */
     public void updateOver(double dt){
         elapsedTime += dt;
         double x = 0;
@@ -77,6 +89,10 @@ public class Animate {
 
     }
 
+    /**
+     * Checks if the graphics object is at or near the desired end position, and then moves it to the exact end locaation if so
+     * @return
+     */
     public boolean check(){
          if((Math.abs(movingObj.getPosition().getX() - end.getX()) < 3) && (Math.abs(movingObj.getPosition().getY() - end.getY()) < 3)) {
             movingObj.setPosition(end);

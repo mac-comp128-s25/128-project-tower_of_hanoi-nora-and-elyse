@@ -6,12 +6,14 @@ import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
 import java.awt.Color;
-import java.awt.Paint;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 
-
+/**
+ * @author Nora Betry and Elyse Quigley
+ * Creates the blank game board, has methods for physically moving disks on screen, and handles button creation and operations
+ */
 public class GameBoard {
     private String answer;
     private GameManager gm;
@@ -52,6 +54,10 @@ public class GameBoard {
         
     }
 
+    /**
+     * Creates the graphic objects for the blank board and adds them to a graphics group 
+     * @return      Returns the graphics group created. 
+     */
     private GraphicsGroup constructBoard(){
         GraphicsGroup gg = new GraphicsGroup();
         Rectangle bottomRectangle = new Rectangle(new Point(50, 450), new Point(700, 10));
@@ -76,29 +82,51 @@ public class GameBoard {
         return board;
     }
 
+    /**
+     * Adds specified disk object to the first tower stack.
+     */
     public void addStack1(Disk d){
         stack1.push(d);
     }
 
+    /**
+     * Adds specified disk object to the second tower stack.
+     */
     public void addStack2(Disk d){
         stack2.push(d);
     }
+
+    /**
+     * Adds specified disk object to the third tower stack.
+     */
     public void addStack3(Disk d){
         stack3.push(d);
     }
 
+    /**
+     * Removes the top disk from the first tower stack and returns it. 
+     */
     public Disk removeStack1(){
        return stack1.pop();
     }
 
+    /**
+     * Removes the top disk from the second tower stack and returns it. 
+     */
     public Disk removeStack2(){
        return stack2.pop();
     }
 
+    /**
+     * Removes the top disk from the third tower stack and returns it. 
+     */
     public Disk removeStack3(){
        return stack3.pop();
     }
 
+    /**
+     * Empties all the stacks, including removing the graphics objects from the canvas and resetting the distancesFromBottom array. 
+     */
     public void resetStacks(){
         distancesFromBottom[0] = 430 - (20 * level);
         distancesFromBottom[1] = 430;
@@ -111,6 +139,10 @@ public class GameBoard {
         board.draw();
     }
 
+    /**
+     * Sets the level and updates the distancesFromBottom array accordingly. 
+     * @param l
+     */
     public void setLevel(int l){
         level = l;
         distancesFromBottom[0] = 430 - (20 * level);
@@ -118,6 +150,13 @@ public class GameBoard {
 
     }
 
+    /**
+     * Physically moves the rectangle object by finding the new position and adding an animation to the queue using that. 
+     * Updates the distancesFromBottom array. 
+     * @param d                   The disk being moved
+     * @param newStack            The stack the disk is being moved to 
+     * @param originalStack       The stack the disk is coming from
+     */
     public void moveDisk(Disk d, int newStack, int originalStack){
         double xPos = 0;
         if(newStack ==1){
@@ -138,6 +177,9 @@ public class GameBoard {
         board.draw();
     }
 
+    /**
+     * Returns an ArrayList of the three stacks
+     */
     public ArrayList<Deque<Disk>> getStacks(){
         ArrayList<Deque<Disk>> result = new ArrayList<>();
         result.add(stack1);
@@ -146,6 +188,9 @@ public class GameBoard {
         return result;
     }
 
+    /**
+     * Puts winning text on the canvas.
+     */
     public void winScreen(){
         GraphicsText youWin = new GraphicsText("Level Passed!\n Next level: " + (level) + "\n   Moves: " + gm.getNumMoves());
         youWin.setCenter(350, 50);
@@ -157,6 +202,9 @@ public class GameBoard {
     }
 
 
+    /**
+     * Constructs the buttons, puts them on the canvas, and calls handleButtonClick when clicked. 
+     */
     public void setUpButtons() {
         tower1 = new Button("Tower 1");
         tower2 = new Button("Tower 2");
@@ -180,9 +228,13 @@ public class GameBoard {
         tower3.onClick(() -> handleButtonClick(3));
         help.onClick(() -> handleButtonClick(5)); 
     }
+
+    /**
+     * Calls shuffleStacks based on the sequence of buttons pressed, or calls the moveEfficiently method if the help button is pressed. 
+     * @param towerNumber
+     */
     private void handleButtonClick(int towerNumber) {
         answer = answer + buttonPressed(towerNumber);
-        indicateButton();
         if(towerNumber == 5){
             level = level -1;
             gm.setNumMoves(0);
@@ -203,13 +255,14 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Resets the board, calls the win screen method, and moves to the next level. 
+     */
     public void nextLevel() {
         level++;
         if (level <= 9) {
             if(solved){
-               
-                winScreen();
-                
+                winScreen();  
             }
             resetStacks();
             solved = false;
@@ -217,12 +270,8 @@ public class GameBoard {
             gm.setBoard(level, this);
             setUpButtons();
        
-           
-        
         gm.updateConstantText(this);
-        
-        
-         }
+        }
     }
     
 
@@ -230,6 +279,9 @@ public class GameBoard {
         return answer;
     }
 
+    /**
+     * Returns a string based on the buttons pressed and the sequence in which they were pressed. 
+     */
     public String buttonPressed(int pressed) {
         String sequence = "0";
         if(button1 && button2) {
@@ -271,15 +323,14 @@ public class GameBoard {
 
     }
 
-    public void indicateButton() {
-
-    }
-
     public void setDiskManager(DiskManager dm){
         this.dm = dm;
         fmc = new FewestMoveCalculator(this, gm, dm);
     }
 
+    /**
+     * Returns the minimum amount of moves a level can be solved in
+     */
     public int calculateMinMoves() {
         if(level == 1) {
             minMoves = 1;
@@ -293,14 +344,13 @@ public class GameBoard {
         solved = b;
     }
 
-    public void removeStack(int num) {
-        
-    }
-
     public int[] getDistancesFromBottom(){
         return distancesFromBottom;
     }
 
+    /**
+     * Updates the distancesFromBottom array according to which stack was added to and removed from
+     */
     public void updateDistancesFromBottom(int newStack, int originalStack){
         distancesFromBottom[newStack-1] -= 20;
         distancesFromBottom[originalStack-1] += 20;
